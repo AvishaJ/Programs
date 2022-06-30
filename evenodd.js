@@ -1,9 +1,10 @@
-let Count=(arr, arr_size)=>
+let Count=(arr)=>
 {
+	let array_size=arr.length;
 	let even_count = 0;
 	let odd_count = 0;
     let zero_count= 0;
-	for (let i = 0; i < arr_size; i++) {
+	for (let i = 0; i < array_size; i++) {
 		
 		if (arr[i] & 1 == 1)
         {
