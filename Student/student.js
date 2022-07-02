@@ -50,15 +50,25 @@ class Student {
        for(let i=0; i<semCGPA.length; i++)
         {
             if (semCGPA[i]>=9)
-            {tempSemGarde[i]='A';}
+            {
+                tempSemGarde[i]='A'
+            }
             else if(semCGPA[i]>=7 && semCGPA[i]<9) 
-            {tempSemGarde[i]='B';}
+            {
+                tempSemGarde[i]='B'
+            }
             else if(semCGPA[i]>=5 && semCGPA[i]<7) 
-            {tempSemGarde[i]='C';}
+            {
+                tempSemGarde[i]='C'
+            }
             else if(semCGPA[i]>=4 && semCGPA[i]<5) 
-            {tempSemGarde[i]='D';}
+            {
+                tempSemGarde[i]='D'
+            }
             else 
-            {tempSemGarde[i]='F';}
+            {
+                tempSemGarde[i]='F'
+            }
         } 
         return tempSemGarde;
     }
@@ -83,14 +93,24 @@ class Student {
         }
         avgofCgpa  = sumOfCgpa/semCGPA.length;
         if (avgofCgpa >=9) 
-            avgOfGrade='A';
+            {
+                avgOfGrade='A'
+            }
             else if(avgofCgpa >=7 && avgofCgpa <9) 
-            avgOfGrade='B';
+            {
+                avgOfGrade='B'
+            }
             else if(avgofCgpa >=5 && avgofCgpa <7) 
-            avgOfGrade='C';
+            {
+                avgOfGrade='C'
+            }
             else if(avgofCgpa >=4 && avgofCgpa <5) 
-            avgOfGrade='D';
-            else avgOfGrade='F';
+            {
+                avgOfGrade='D'
+            }
+            else {
+                avgOfGrade='F'
+            };
         return avgOfGrade;
     }
 
@@ -142,7 +162,7 @@ class Student {
                 this.updateLastName(value)
                 return `${propertyToUpdate} Updated with ${value}`
 
-            case "dateOfBirth": 
+            case "dob": 
                 this.updateDOB(value)
                 return `${propertyToUpdate} Updated with ${value}`
 
