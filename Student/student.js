@@ -1,169 +1,165 @@
 class Student {
-    constructor(fName, lName, fullName, dob, age, semCgpa, finalCgpa, semGrade, finalGrade, yearOfEnroll, yearOfPassing, noOfYearsToPass) 
+    constructor(firstName, lastName, fullName, dob, age, semCGPA, finalCgpa, semGrade, finalGrade, yearOfEnroll, yearOfPassing, noOfYearsToGraduate) 
     {
-        this.fName = fName
-        this.lName = lName
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.fullName = fullName;
-        this.dob = dob
-        this.age = age
-        this.semCgpa = semCgpa
-        this.finalCgpa = finalCgpa
-        this.semGrade = semGrade
-        this.finalGrade = finalGrade
-        this.yearOfEnroll = yearOfEnroll
-        this.yearOfPassing = yearOfPassing
-        this.noOfYearsToPass = noOfYearsToPass
-
+        this.dob = dob;
+        this.age = age;
+        this.semCGPA = semCGPA;
+        this.finalCgpa = finalCgpa;
+        this.semGrade = semGrade;
+        this.finalGrade = finalGrade;
+        this.yearOfEnroll = yearOfEnroll;
+        this.yearOfPassing = yearOfPassing;
+        this.noOfYearsToGraduate = noOfYearsToGraduate;
     }
 
-    static createStudent(firstName, lastName, dob, finalCgpa, yearOfEnroll, noOfYearsToPass) 
+    static createNewStudent(firstName, lastName, dob, semCGPA, yearOfEnroll, yearOfPassing) 
     {
-        const fullName = firstName + lastName;
-        let newStudent = Student(fName, lName, fullName, dob, age, semCgpa, finalCgpa, semGrade, finalGrade, yearOfEnroll, yearOfPassing, noOfYearsToPass)
+        let fullName = firstName +" "+ lastName;
 
-        return newStudent
-    }
+        let noOfYearsToGraduate = Student.#noOfYearsToGraduate(yearOfPassing,yearOfEnroll);
 
-    // update function 
-    updateFirstname(newFirstname) 
-    {
-        this.fName = newFirstname
-    }
-    updateLastName(newlastname) 
-    {
-        this.lName = newlastname
-    }
+        let age = Student.#age(dob);
 
-    updateDob(newdob) 
-    {
-        this.dob = newdob
-    }
-    updateAge(newAge) 
-    {
-        this.age = newAge
-    }
-    updateSemCgpa(newSemcgpa) 
-    {
-        this.semcgpa = newSemcgpa
-    }
-    updatefinalCgpa(newFinalCgpa) 
-    {
-        this.finalCgpa = newFinalCgpa
-    }
-    updateSemGrade(newSemGrade) 
-    {
-        this.semGrade = newSemGrade
-    }
-    updateFinalGrade(newFinalGrade) 
-    {
-        this.finalGrade = newFinalGrade
-    }
-    updateYearOfEnroll(newyearOfEnroll)
-    {
-        this.yearOfEnroll = newyearOfEnroll
-    }
-    updateYearOfPassing(newyearOfPassing) 
-    {
-        this.yearOfPassing = newyearOfPassing
-    }
-    updateYearToPass(newNoOfYearsToPass) 
-    {
-        this.noOfYearsToPass = newNoOfYearsToPass
+        let finalCgpa = Student.#finalCgpa(semCGPA);
+
+        let semGrade = Student.#semGrade(semCGPA);
+
+        let finalGrade = Student.#finalGrade(semCGPA);
+
+        let tempStud = new Student(firstName, lastName, fullName, dob, age, semCGPA, finalCgpa, semGrade, finalGrade, yearOfEnroll, yearOfPassing, noOfYearsToGraduate)
+
+        return tempStud
     }
 
-    // wrapper Funstion of update 
+    static #noOfYearsToGraduate(yearOfPassing,yearOfEnroll)
+    {
+        return  yearOfPassing - yearOfEnroll;
+    }
+
+    static #age(dob)
+    {
+        const yearOfBirth = new Date(dob);
+        return 2022-yearOfBirth.getFullYear(); 
+    }
+    static #semGrade(semCGPA)
+    {
+        let tempSemGarde=[]
+       for(let i=0; i<semCGPA.length; i++)
+        {
+            if (semCGPA[i]>=9)
+            {tempSemGarde[i]='A';}
+            else if(semCGPA[i]>=7 && semCGPA[i]<9) 
+            {tempSemGarde[i]='B';}
+            else if(semCGPA[i]>=5 && semCGPA[i]<7) 
+            {tempSemGarde[i]='C';}
+            else if(semCGPA[i]>=4 && semCGPA[i]<5) 
+            {tempSemGarde[i]='D';}
+            else 
+            {tempSemGarde[i]='F';}
+        } 
+        return tempSemGarde;
+    }
+
+
+    static #finalCgpa(semCGPA){
+        let sumOfCgpa=0;
+        for(let i=0; i<semCGPA.length; i++)
+        {
+            sumOfCgpa+=semCGPA[i];
+        }
+        let avgOfCgpa  = sumOfCgpa/semCGPA.length;
+        return avgOfCgpa;
+    }
+
+
+    static #finalGrade(semCGPA){
+        let sumOfCgpa=0, avgOfGrade, avgofCgpa =0;
+        for(let i=0; i<semCGPA.length; i++)
+        {
+            sumOfCgpa+=semCGPA[i];
+        }
+        avgofCgpa  = sumOfCgpa/semCGPA.length;
+        if (avgofCgpa >=9) 
+            avgOfGrade='A';
+            else if(avgofCgpa >=7 && avgofCgpa <9) 
+            avgOfGrade='B';
+            else if(avgofCgpa >=5 && avgofCgpa <7) 
+            avgOfGrade='C';
+            else if(avgofCgpa >=4 && avgofCgpa <5) 
+            avgOfGrade='D';
+            else avgOfGrade='F';
+        return avgOfGrade;
+    }
+
+
+    displayFullName() {
+        console.log(`${firstName} ${lastName} `);
+    }
+
+    displayYearOfEnroll() {
+        console.log(`${this.yearOfEnroll} `);
+    }
+
+    displayDOB() {
+        console.log(`${this.dateOfBirth} `);
+    }
+
+    updateFirstname(newFirstname) {
+        this.firstName = newFirstname;
+        this.fullName = this.firstName +" "+ this.lastName;
+    }
+
+    updateLastName(newlastname) {
+        this.lastName = newlastname;
+        this.fullName = this.firstName +" "+ this.lastName;
+    }
+
+    updateDOB(newdob) {
+        this.dob = newdob;
+        this.age = Student.#age(newdateOfBirth);
+    }
+    
+    updateYearOfEnroll(newYearOfEnroll) {
+        this.yearOfEnroll = newYearOfEnroll;
+        this.noOfYearsToGraduate = this.yearOfPassing - this.yearOfEnroll;
+    }
+
+    updateYearOfPassing(newYearOfPassing) {
+        this.yearOfPassing = newYearOfPassing;
+        this.noOfYearsToGraduate = this.yearOfPassing - this.yearOfEnroll;
+    }
+
     update(propertyToUpdate, value) {
         switch (propertyToUpdate) {
-            case "firstName": this.updateFirstname(value)
+            case "firstName": 
+                this.updateFirstname(value)
                 return `${propertyToUpdate} Updated with ${value}`
 
-            case "lastName": this.updateLastName(value)
+            case "lastName": 
+                this.updateLastName(value)
                 return `${propertyToUpdate} Updated with ${value}`
 
-            case "dob": this.updateDob(value)
+            case "dateOfBirth": 
+                this.updateDOB(value)
                 return `${propertyToUpdate} Updated with ${value}`
 
-            case "Semcgpa": this.updateSemCgpa(value)
+            case "yearOfEnroll": 
+                this.updateYearOfEnroll(value)
                 return `${propertyToUpdate} Updated with ${value}`
 
-            case "finalCgpa": this.updatefinalCgpa(value)
-                return `${propertyToUpdate} Updated with ${value}`
-
-            case "semGrade": this.updateSemGrade(value)
-                return `${propertyToUpdate} Updated with ${value}`
-
-            case "semCgpa": this.updateSemCgpa(value)
-                return `${propertyToUpdate} Updated with ${value}`
-
-            case "yearOfEnroll": this.updateYearOfEnroll(value)
-                return `${propertyToUpdate} Updated with ${value}`
-
-            case "yearOfPassing": this.updateYearOfPassing(value)
+            case "yearOfPassing": 
+                this.updateYearOfPassing(value)
                 return `${propertyToUpdate} Updated with ${value}`
 
             default: return "Wrong Property"
 
         }
     }
-
-    //Display functions 
-    displayFullName() {
-        let fullname = this.fName + this.lName
-        console.log("Full Name is : " + fullname)
-
-    }
-    displayFinalCgpa(finalCgpa) {
-        let tempcgpa = 0;
-        for (let i = 0; i < finalCgpa.length; i++) {
-            tempcgpa += semCgpa[i];
-        }
-        return tempcgpa / 8;
-    }
-
-    displaySemGrade(finalCgpa) {
-        let tempSemGrade = [];
-        for (let i = 0; i < finalCgpa.length; i++) {
-            if (finalCgpa[i] >= 9) {
-                tempSemGrade[i] = "A";
-            } else if (finalCgpa[i] >= 7) {
-                tempSemGrade[i] = "B";
-            } else if (finalCgpa[i] >= 6) {
-                tempSemGrade[i] = "C";
-            } else if (finalCgpa[i] >= 5) {
-                tempSemGrade[i] = "D";
-            } else {
-                tempSemGrade[i] = "F";
-            }
-        }
-        return tempSemGrade;
-    }
-
-    displayFinalGrade(finalCgpa) {
-        let fGrade = "";
-        if (finalCgpa >= 9) {
-            fGrade = "A";
-        } else if (finalCgpa >= 7) {
-            fGrade = "B";
-        } else if (finalCgpa >= 6) {
-            fGrade = "C";
-        } else if (finalCgpa >= 5) {
-            fGrade = "D";
-        } else {
-            fGrade = "F";
-        }
-        return fGrade;
-    }
-
-    displayNoOfYearOfPassing() {
-        let ans = this.yearOfPassing - this.yearOfEnroll
-        console.log("Number of years to graduate is :" + ans)
-    }
-
 }
-
-const avisha = new createStudent('avi', ' jain', '24/08/2000', [9, 8, 9, 9, 10, 9, 8, 9], 2019, 2022)
-//console.log("Details of student are as follows")
-console.log(avisha)
-avisha.displayFullName()
-avisha.displayNoOfYearOfPassing()
-
+const avi = Student.createNewStudent("Avisha", "Jain", "25 May 2000", [9,9,8,7,6,8,9,10] , 2019, 2022)
+console.log(avi)
+avi.update("semCGPA",[9,9,9,9.1,8.9])
+console.log(avi)
