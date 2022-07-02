@@ -181,5 +181,5 @@ class Student {
 }
 const avi = Student.createNewStudent("Avisha", "Jain", "25 May 2000", [9,9,8,7,6,8,9,10] , 2019, 2022)
 console.log(avi)
-avi.update("semCGPA",[9,9,9,6,7,9,7,6])
+avi.update("firstName","arpit")
 console.log(avi)
