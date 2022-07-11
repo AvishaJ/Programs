@@ -1,127 +1,132 @@
-let userId = 0
-let contactId = 0
-let contactDetailsId = 0
-const allUsers = []
-const allContact = []
-const allContactDetails = []
-// const roles = {
-//     ADMIN: "Admin",
-//     USER : "User"
-//   };
-
 class User {
-    constructor(firstName, lastName, role) {
-        this.userId = userId++
+    static allUsers = [];
+    static userId = 0;
+    constructor(firstName, lastName, userName, role) {
+        this.userId = User.userId++
         this.firstName = firstName
         this.lastName = lastName
+        this.userName = userName
         this.role = role
-        this.isActive=true
+        this.isActive = true
+
     }
 
-    creatNewUser(firstName, lastName, userId) {
+    creatNewUser(firstName, lastName, userName, role) {
+
         if (this.role == "admin") {
-            let isActive = true
-            let newUser = new User(firstName, lastName, userId)
-            allUsers.push(newUser)
-            return [newUser,"New user is created"]
+            let [indexOfUser,isUserExists] = User.#findUser(userName)
+            if (isUserExists) {
+                return [-1,"Username exists,Try with another username"]
+            }
+
         }
-        else{
-            return["Permission Denied"]
-        }
+
+        let newUser = new User(firstName, lastName, userName, role)
+        User.allUsers.push(newUser)
+        return [newUser, "New user is created"]
+
 
     }
 
-    deleteUser(firstName) {
-        if (this.role == "admin") {
-            this.isActive = false
-            return ["User Deleted"]
+    deleteUser(userName) {
+        if (this.isActive == false) {
+            return [false, "User not active"]
         }
-        else{
-            return["Permission Denied"]
+
+        if (this.role != "admin") {
+            return ["only admin can delete user"]
         }
+
+        let [isUserExists, indexOfUser] = User.findUser(userName)
+        if (!isUserExists) {
+            return ["Username does not exists"]
+        }
+
+        User.allUsers[indexOfUser].isActive = false
+        return [true, "user deleted"]
+
     }
 
-    findUser(firstName){
-        if(this.isActive==false){
-            return["No user exists"]
+    static #findUser(userName) {
+        if (this.isActive == false) {
+            return ["No user exists",false]
         }
-        for (let index = 0; allUsers < array.length; index++) {
-            const allUserFind = allUsers[index];
-            console.log(allUserFind)
-            
+        for (let index = 0; index < User.allUsers.length; index++) {
+            if (userName == User.allUsers[index].userName) {
+                return ["User Exists",true ]
+            }
         }
-    
-    }
+        return["No User Exists",false]
 
+    }
 
 }
 
 class Contact {
-    constructor(firstName,lastName) {
-        this.contactId = contactId++
+    static contactId = 0
+    constructor(firstName, lastName) {
+        this.contactId = Contact.contactId++
         this.firstName = firstName
-        this.lastName=lastName
-        this.isActive=true
+        this.lastName = lastName
+        this.isActive = true
+        this.allContact = []
+
     }
 
-    createContact(contactId) {
-        if (this.role == "admin" || this.role == "user") {
-            let contactId = allContact[index].contactId
-            const newContact = new Contact(contactId)
-            allContact.push(newContact)
+    createContact(firstName, lastName) {
+        if (this.isActive == false) {
+            return ["not a valid user"]
         }
+        const newContact = new Contact(firstName, lastName)
+        Contact.allContact.push(newContact)
+        return [newContact, "Contact Created"]
     }
 
-    isContactExists(firstName){
-        if(this.isActive==false){
-            return["no contact Exists"]
+    isContactExists(firstName) {
+        if (this.isActive == false) {
+            return ["no contact Exists"]
         }
-        else{
-            return[this.firstName + this.lastName]
-        }
+        return [this.firstName + this.lastName]
+
     }
 
-    displayContact() {
+    displayContacts() {
+        if (this.isActive == false) {
+            return ["not a valid user"]
+        }
 
-        for (let index = 0; index < allContact.length; index++) 
-        {
-            const allContact = allContactDetails[index];
-            console.log(allContact)
+        for (let index = 0; index < allContact.length; index++) {
+            const allContactDisplay = allContact[index];
+            console.log(allContactDisplay)
 
         }
     }
 
     deleteContact() {
-        if ( this.active==false)
-        {
-            return[false,"no Contact"]
+        if (this.isActive == false) {
+            return [false, "no Contact"]
         }
-        else{
-            this.isActive=false
-            return[true,"Deleted"]
+        else {
+            this.isActive = false
+            return [true, "Deleted"]
         }
     }
 
 }
 
 class ContactDetails {
-    constructor(contactDetailsId, firstName,type, value) {
+    static contactDetailsId = 0
+    constructor(contactDetailsId, firstName, type, value) {
         this.contactDetailsId = contactDetailsId++
+        this.firstName = firstName
         this.type = type
         this.value = value
-        this.firstName=firstName
+
     }
 
-    newContactDetail(contactDetailsId) {
-        let ContactDetailsId = allContactDetails[index].contactDetailsId
-        const newDetailsOfContact = new ContactDetails(ContactDetailsId)
-        allContactDetails.push(newDetailsOfContact)
-    }
 }
 
-let adminUser = new User("avisha", "jain", "admin")
-console.log(adminUser)
-adminUser.creatNewUser("avisha","jain",1001)
-
-let sanket= new User("Sanket","Jain","user")
-console.log(sanket)
+let admin = new User("avisha", "jain", "avijain", "admin")
+console.log(admin)
+let [avish,message]=admin.creatNewUser("avish", "jain", "avee", "user");
+console.log(avish)
